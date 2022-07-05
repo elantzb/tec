@@ -10,6 +10,7 @@
 #include <spdlog/spdlog.h>
 
 #include "graphics/texture-object.hpp"
+#include "string.hpp"
 
 namespace tec {
 /**
@@ -175,12 +176,14 @@ bool OBJ::Parse() {
 	unsigned int vertex_count = 0, normal_count = 0, uv_count = 0;
 	std::string line;
 	std::size_t start = 0U;
-	std::size_t end = buffer.find('\n');
+	//std::size_t end = buffer.find('\n');
+	std::size_t end = get_line_end(buffer);
 	std::string identifier;
 	while (end != std::string::npos) {
 		line = buffer.substr(start, end - start);
-		start = end + 1;
-		end = buffer.find('\n', start);
+		start = get_line_start(buffer, end);
+		//end = buffer.find('\n', start);
+		end = get_line_end(buffer, start);
 
 		identifier = line.substr(0, line.find(' '));
 		if (identifier == "mtllib") {
@@ -211,14 +214,16 @@ bool OBJ::Parse() {
 	this->uvs.reserve(uv_count);
 
 	start = 0U;
-	end = buffer.find('\n');
+	//end = buffer.find('\n');
+	end = get_line_end(buffer);
 	identifier = "";
 	std::stringstream face_ss;
 	std::stringstream ss;
 	while (end != std::string::npos) {
 		line = buffer.substr(start, end - start);
-		start = end + 1;
-		end = buffer.find('\n', start);
+		start = get_line_start(buffer, end);
+		//end = buffer.find('\n', start);
+		end = get_line_end(buffer, start);
 		ss.clear();
 		ss.str(line);
 

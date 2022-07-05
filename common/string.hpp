@@ -26,4 +26,22 @@ std::wstring utf8_decode(const std::string& str);
 
 std::vector<std::string> SplitString(std::string args, std::string deliminator = " ");
 
+/**
+	* \brief Seek the index of the first line ending in the string
+	*
+	* \param _str the string in which to search
+	* \param _offset index to start searching from in _str
+	* \return size_t index of first line ending after _offset
+	*/
+size_t get_line_end(std::string _str, size_t _offset = 0U);
+
+/**
+	* \brief Seek the index of the first non-line-ending character in the string
+	*
+	* \param _str the string in which to search
+	* \param _offset index to start searching from in _str
+	* \return size_t index of first non-line-ending character after _offset
+	*/
+size_t get_line_start(std::string _str, size_t _offset = 0U);
+
 } // namespace tec

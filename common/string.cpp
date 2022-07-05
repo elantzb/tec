@@ -73,4 +73,22 @@ std::vector<std::string> SplitString(std::string args, std::string deliminator) 
 	return {std::sregex_token_iterator(args.begin(), args.end(), regexz, -1), std::sregex_token_iterator()};
 }
 
+size_t get_line_end(std::string _str, size_t _offset) {
+	size_t ret = _str.find("\n", _offset);
+
+	if (_str.c_str()[ret-1] == '\r')
+		ret -= 1;
+
+	return ret;
+}
+
+size_t get_line_start(std::string _str, size_t _offset) {
+	size_t ret = _offset;
+	
+	while(_str.c_str()[ret] == '\r' || _str.c_str()[ret] == '\n')
+		ret += 1;
+
+	return ret;
+}
+
 } // namespace tec
